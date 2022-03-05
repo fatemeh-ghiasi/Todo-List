@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>ToDo List</header>
+    <section>
+      <div class="form-container">
+        <form action="">
+          <input type="text" class="todo-input" name="" id="" />
+          <span class="todo-button"
+            ><svg
+              width="25"
+              height="25"
+              viewBox="0 0 32 32"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              enable-background="new 0 0 32 32"
+            >
+              <path
+                d="M16 .5C7.45.5.5 7.45.5 16S7.45 31.5 16 31.5 31.5 24.55 31.5 16 24.55.5 16 .5zm8.71 17H17.5v7.21c0 .82-.67 1.5-1.5 1.5s-1.5-.68-1.5-1.5V17.5H7.29c-.82 0-1.5-.67-1.5-1.5s.68-1.5 1.5-1.5h7.21V7.29c0-.82.67-1.5 1.5-1.5s1.5.68 1.5 1.5v7.21h7.21c.82 0 1.5.67 1.5 1.5s-.68 1.5-1.5 1.5z"
+                fill="#6d4bc4"
+                class="fill-000000"
+              ></path></svg
+          ></span>
+        </form>
+        <div class="select">
+          <select name="todos" class="filter-todos" id="">
+            <option value="all" class="all">all</option>
+            <option value="completed" class="completed">completed</option>
+            <option value="uncompleted" class="uncompleted">uncompleted</option>
+          </select>
+        </div>
+      </div>
+      <div class="todo-container">
+        <ul class="todolist"></ul>
+      </div>
+    </section>
+    <script src="script.js"></script>
+  </body>
+</html>
