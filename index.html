@@ -2,43 +2,113 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Todo List</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header>ToDo List</header>
-    <section>
+    <header>My Todo List</header>
+    <section class="todo-section showTasks">
       <div class="form-container">
-        <form action="">
-          <input type="text" class="todo-input" name="" id="" />
-          <span class="todo-button"
-            ><svg
-              width="25"
-              height="25"
-              viewBox="0 0 32 32"
-              xml:space="preserve"
+        <div class="info">
+          <div id="time">
+            <span class="dayOfWeek"></span
+            ><span style="color: #159bcf; font-size: 20px">,</span>
+            <span class="dayOfMonth"></span>
+            <span class="curMonth"></span>
+          </div>
+
+          <div id="total">0 Tasks</div>
+        </div>
+        <div class="showNewTask">
+          <span
+            ><?xml version="1.0" ?><svg
+              height="26"
+              viewBox="0 0 24 24"
+              width="26"
               xmlns="http://www.w3.org/2000/svg"
-              enable-background="new 0 0 32 32"
             >
               <path
-                d="M16 .5C7.45.5.5 7.45.5 16S7.45 31.5 16 31.5 31.5 24.55 31.5 16 24.55.5 16 .5zm8.71 17H17.5v7.21c0 .82-.67 1.5-1.5 1.5s-1.5-.68-1.5-1.5V17.5H7.29c-.82 0-1.5-.67-1.5-1.5s.68-1.5 1.5-1.5h7.21V7.29c0-.82.67-1.5 1.5-1.5s1.5.68 1.5 1.5v7.21h7.21c.82 0 1.5.67 1.5 1.5s-.68 1.5-1.5 1.5z"
-                fill="#6d4bc4"
-                class="fill-000000"
-              ></path></svg
+                d="M12 6V12M12 12V18M12 12H18M12 12L6 12"
+                stroke="white"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              /></svg
           ></span>
-        </form>
-        <div class="select">
-          <select name="todos" class="filter-todos" id="">
-            <option value="all" class="all">all</option>
-            <option value="completed" class="completed">completed</option>
-            <option value="uncompleted" class="uncompleted">uncompleted</option>
-          </select>
+        </div>
+        <div class="todo-container">
+          <ul class="todolist"></ul>
         </div>
       </div>
-      <div class="todo-container">
-        <ul class="todolist"></ul>
+
+      <div class="select">
+        <select name="todos" class="filter-todos" id="">
+          <option value="all" class="all">all</option>
+          <option value="completed" class="completed">completed</option>
+          <option value="uncompleted" class="uncompleted">uncompleted</option>
+        </select>
       </div>
     </section>
+    <div class="formPopup">
+      <div class="overlay"></div>
+
+      <form action="" class="newtask-form">
+        <span class="close"
+          ><svg
+            data-name="Layer 2"
+            viewBox="0 0 38 38"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 37.44A18.44 18.44 0 1 1 37.44 19 18.461 18.461 0 0 1 19 37.44Zm0-34.38A15.94 15.94 0 1 0 34.94 19 15.957 15.957 0 0 0 19 3.06Z"
+              fill="#279ec5"
+              class="fill-000000"
+            ></path>
+            <rect
+              height="2.5"
+              rx="1.25"
+              transform="rotate(-135 19 19)"
+              width="15.435"
+              x="11.282"
+              y="17.75"
+              fill="#279ec5"
+              class="fill-000000"
+            ></rect>
+            <rect
+              height="2.5"
+              rx="1.25"
+              transform="rotate(-45 19 19)"
+              width="15.435"
+              x="11.282"
+              y="17.75"
+              fill="#279ec5"
+              class="fill-000000"
+            ></rect></svg
+        ></span>
+        <h1>New Task</h1>
+        <div class="control-group">
+          <label for="input">Add a task</label>
+          <input
+            type="text"
+            placeholder="I want to ..."
+            class="todo-input"
+            name=""
+            id="input"
+          />
+        </div>
+        <div class="control-group">
+          <label for="category">Category</label>
+          <select name="" id="category">
+            <option value="">personal</option>
+            <option value="">work</option>
+          </select>
+        </div>
+        <div class="form-button">
+          <button class="todo-button">add task</button>
+        </div>
+      </form>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>

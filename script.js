@@ -5,47 +5,71 @@ const todoItem = document.querySelector(".todo li");
 const todoList = document.querySelector(".todolist");
 const todoContent = document.querySelector("#todo-content");
 const filterSelect = document.querySelector(".filter-todos");
+const showTask = document.querySelector(".showNewTask");
+const section = document.querySelector(".todo-section");
+const form = document.querySelector(".formPopup");
+const backdrop = document.querySelector(".overlay");
+const closeBtn = document.querySelector(".close");
 
 //event listeners
 todoButton.addEventListener("click", addTodo);
 todoList.addEventListener("click", actionTodo);
 filterSelect.addEventListener("click", filterTodo);
+showTask.addEventListener("click", showNewTask);
+backdrop.addEventListener("click", showNewTask);
+closeBtn.addEventListener("click", showNewTask);
 document.addEventListener("DOMContentLoaded", getLocalTodos);
+
 //functions
+
+//call function to show number of tasks after reload
+taskCounter();
+
+//click on add button
 function addTodo(e) {
   e.preventDefault();
+
+  //This is another way:
   // todoContent.textContent = todoInput.value;
   // var todoElement = todoItem.cloneNode(true);
   // todoList.appendChild(todoElement);
   // todoInput.textContent = "";
   // var todoElement = todoItem.cloneNode(true);
+
   const todoElement = document.createElement("li");
   todoElement.setAttribute("id", `${todoInput.value}`);
   todoElement.innerHTML = `
+            <span class="check"> <svg class="check-icon" width="59px" height="42px" viewBox="0 0 59 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                <path d="M4.5,20.5 L21.0302753,37.0302753 L54.5,4.5" id="line" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" sketch:type="MSShapeGroup"></path>
+              </g>
+            </svg></span>
             <span class="text">${todoInput.value}</span>
-            <div class="actions">
-              <svg class="check" width="25" height="25" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1472 930v318q0 119-84.5 203.5T1184 1536H352q-119 0-203.5-84.5T64 1248V416q0-119 84.5-203.5T352 128h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6H352q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113V994q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489-814 814q-24 24-57 24t-57-24L345 825q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z" fill="#287fc7" class="fill-000000"></path></svg>
-              <svg class="remove" viewBox="0 0 32 32" width="25" height="25" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><path d="M6 12v15c0 1.654 1.346 3 3 3h14c1.654 0 3-1.346 3-3V12H6zm6 13a1 1 0 0 1-2 0v-9a1 1 0 0 1 2 0v9zm5 0a1 1 0 0 1-2 0v-9a1 1 0 0 1 2 0v9zm5 0a1 1 0 0 1-2 0v-9a1 1 0 0 1 2 0v9zM27 6h-6V5c0-1.654-1.346-3-3-3h-4c-1.654 0-3 1.346-3 3v1H5c-1.103 0-2 .897-2 2v1a1 1 0 0 0 1 1h24a1 1 0 0 0 1-1V8c0-1.103-.897-2-2-2zM13 5c0-.551.449-1 1-1h4c.551 0 1 .449 1 1v1h-6V5z" fill="#e83c3c" class="fill-000000"></path></svg>
+            <div class="actions"><svg class='remove' viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:#030303;}.cls-2{fill:none;}</style></defs><title/><g data-name="Layer 2" id="Layer_2"><g data-name="Layer 4" id="Layer_4"><path class="cls-1" d="M26,8H20.94V7A2.94,2.94,0,0,0,18,4.06H14A2.94,2.94,0,0,0,11.06,7V8H6a1,1,0,0,0,0,2H7.06V25A2.94,2.94,0,0,0,10,27.94H22A2.94,2.94,0,0,0,24.94,25V10H26a1,1,0,0,0,0-2ZM12.94,8V7A1.07,1.07,0,0,1,14,5.94h4A1.07,1.07,0,0,1,19.06,7V8H12.94ZM23.06,25A1.07,1.07,0,0,1,22,26.06H10A1.07,1.07,0,0,1,8.94,25V10H23.06Z"/><path class="cls-1" d="M18,21.49a1,1,0,0,0,1-1v-4a1,1,0,0,0-2,0v4A1,1,0,0,0,18,21.49Z"/><path class="cls-1" d="M14,21.49a1,1,0,0,0,1-1v-4a1,1,0,0,0-2,0v4A1,1,0,0,0,14,21.49Z"/><rect class="cls-2" height="32" width="32"/></g></g></svg>
             </div>
           `;
-
   todoList.appendChild(todoElement);
   saveLocalTodos(todoInput.value);
+  taskCounter();
+  showNewTask();
   todoInput.value = "";
 }
 
+//click on recycle bin or check icon
 function actionTodo(e) {
   const item = e.target;
   if (e.target.classList[0] === "remove") {
     const todo = item.parentElement.parentElement;
     removeLocalTodos(todo);
+    taskCounter();
     todo.remove();
   } else if (e.target.classList[0] === "check") {
-    const todo = item.parentElement.parentElement;
-    todo.classList.add("checked");
+    const todo = item.parentElement;
+    todo.classList.toggle("checked");
   }
 }
 
+//filter with select box
 function filterTodo(e) {
   console.log(e.target.value);
   console.log(todoList.childNodes);
@@ -73,6 +97,7 @@ function filterTodo(e) {
   });
 }
 
+//add to localStorage after add an item
 function saveLocalTodos(todo) {
   let savedTodos = localStorage.getItem("todos")
     ? JSON.parse(localStorage.getItem("todos"))
@@ -81,17 +106,23 @@ function saveLocalTodos(todo) {
   localStorage.setItem("todos", JSON.stringify(savedTodos));
 }
 
+//add localStorage value to DOM
 function getLocalTodos() {
   let savedTodos = localStorage.getItem("todos")
     ? JSON.parse(localStorage.getItem("todos"))
     : [];
+
   savedTodos.forEach((todo) => {
     const todoElement = document.createElement("li");
     todoElement.innerHTML = `
+            <span class="check"> <svg class="check-icon" width="59px" height="42px" viewBox="0 0 59 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                <path d="M4.5,20.5 L21.0302753,37.0302753 L54.5,4.5" id="line" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" sketch:type="MSShapeGroup"></path>
+              </g>
+            </svg></span>
             <span class="text">${todo}</span>
             <div class="actions">
-              <svg class="check" width="25" height="25" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1472 930v318q0 119-84.5 203.5T1184 1536H352q-119 0-203.5-84.5T64 1248V416q0-119 84.5-203.5T352 128h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6H352q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113V994q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489-814 814q-24 24-57 24t-57-24L345 825q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z" fill="#287fc7" class="fill-000000"></path></svg>
-              <svg class="remove" viewBox="0 0 32 32" width="25" height="25" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><path d="M6 12v15c0 1.654 1.346 3 3 3h14c1.654 0 3-1.346 3-3V12H6zm6 13a1 1 0 0 1-2 0v-9a1 1 0 0 1 2 0v9zm5 0a1 1 0 0 1-2 0v-9a1 1 0 0 1 2 0v9zm5 0a1 1 0 0 1-2 0v-9a1 1 0 0 1 2 0v9zM27 6h-6V5c0-1.654-1.346-3-3-3h-4c-1.654 0-3 1.346-3 3v1H5c-1.103 0-2 .897-2 2v1a1 1 0 0 0 1 1h24a1 1 0 0 0 1-1V8c0-1.103-.897-2-2-2zM13 5c0-.551.449-1 1-1h4c.551 0 1 .449 1 1v1h-6V5z" fill="#e83c3c" class="fill-000000"></path></svg>
+              <svg class='remove' viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:#030303;}.cls-2{fill:none;}</style></defs><title/><g data-name="Layer 2" id="Layer_2"><g data-name="Layer 4" id="Layer_4"><path class="cls-1" d="M26,8H20.94V7A2.94,2.94,0,0,0,18,4.06H14A2.94,2.94,0,0,0,11.06,7V8H6a1,1,0,0,0,0,2H7.06V25A2.94,2.94,0,0,0,10,27.94H22A2.94,2.94,0,0,0,24.94,25V10H26a1,1,0,0,0,0-2ZM12.94,8V7A1.07,1.07,0,0,1,14,5.94h4A1.07,1.07,0,0,1,19.06,7V8H12.94ZM23.06,25A1.07,1.07,0,0,1,22,26.06H10A1.07,1.07,0,0,1,8.94,25V10H23.06Z"/><path class="cls-1" d="M18,21.49a1,1,0,0,0,1-1v-4a1,1,0,0,0-2,0v4A1,1,0,0,0,18,21.49Z"/><path class="cls-1" d="M14,21.49a1,1,0,0,0,1-1v-4a1,1,0,0,0-2,0v4A1,1,0,0,0,14,21.49Z"/><rect class="cls-2" height="32" width="32"/></g></g></svg>
             </div>
           `;
 
@@ -99,15 +130,80 @@ function getLocalTodos() {
   });
 }
 
+// remove item from DOM and localStorage
 function removeLocalTodos(todo) {
-  console.log(todo.children[0].innerText);
   let savedStorage = localStorage.getItem("todos")
     ? JSON.parse(localStorage.getItem("todos"))
     : [];
   const filterStorage = savedStorage.filter((t) => {
-    if (t !== todo.children[0].innerText) {
+    if (t !== todo.innerText) {
       return t;
     }
   });
   localStorage.setItem("todos", JSON.stringify(filterStorage));
+}
+
+// count the tasks
+function taskCounter() {
+  let savedTodos = localStorage.getItem("todos");
+  let total = JSON.parse(savedTodos).length;
+  if (total > 1) {
+    document.querySelector("#total").innerText = `${total} Tasks`;
+  } else {
+    document.querySelector("#total").innerText = `${total} Task`;
+  }
+}
+
+//Day Of Today: Sunday 6th March
+var objToday = new Date(),
+  weekday = new Array(
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ),
+  dayOfWeek = weekday[objToday.getDay()],
+  domEnder = (function () {
+    var a = objToday;
+    if (/1/.test(parseInt((a + "").charAt(0)))) return "th";
+    a = parseInt((a + "").charAt(1));
+    return 1 == a ? "st" : 2 == a ? "nd" : 3 == a ? "rd" : "th";
+  })(),
+  dayOfMonth =
+    today + (objToday.getDate() < 10)
+      ? "0" + objToday.getDate() + domEnder
+      : objToday.getDate() + domEnder,
+  months = new Array(
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ),
+  curMonth = months[objToday.getMonth()],
+  curYear = objToday.getFullYear();
+var today = dayOfWeek + " " + dayOfMonth + " " + curMonth;
+document.querySelector(".dayOfWeek").innerText = dayOfWeek;
+document.querySelector(".dayOfMonth").innerText = dayOfMonth;
+document.querySelector(".curMonth").innerText = curMonth;
+
+//show popups
+function showNewTask() {
+  if (section.classList.contains("showTasks")) {
+    section.classList.remove("showTasks");
+    form.classList.add("showForm");
+  } else {
+    section.classList.add("showTasks");
+    form.classList.remove("showForm");
+  }
 }

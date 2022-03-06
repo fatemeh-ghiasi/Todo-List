@@ -1,8 +1,22 @@
+@font-face {
+  font-family: Shabnam;
+  src: url("https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.eot");
+  src: url("https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.woff2")
+      format("woff2"),
+    url("https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.woff")
+      format("woff"),
+    url("https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.ttf")
+      format("truetype");
+  font-weight: normal;
+}
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   list-style: none;
+  font-family: Shabnam;
 }
 a {
   cursor: pointer;
@@ -23,10 +37,30 @@ a {
 
 body {
   color: var(--mainBlack);
-  background-color: var(--bodyColor);
+  background-image: url("/images/bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
   display: flex;
+  position: relative;
+  overflow: hidden;
   flex-direction: column;
   align-items: center;
+}
+body::before {
+  margin: 0 !important;
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: -webkit-linear-gradient(
+    left,
+    rgb(15, 35, 42, 0.61),
+    rgb(29, 40, 42, 0.15)
+  );
+  box-shadow: 1px 4px 20px 6px rgb(0 0 0 / 18%);
 }
 
 header {
@@ -34,6 +68,82 @@ header {
   align-items: center;
   justify-content: center;
   display: flex;
+  font-family: cursive;
+  font-size: 25px;
+  color: white;
+  font-weight: 800;
+}
+section {
+  display: flex;
+}
+.formPopup {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  transform: scale(1.3);
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(21, 17, 17, 0.61);
+  display: flex;
+  align-items: center;
+}
+.showForm {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+}
+
+.close {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 20px;
+  cursor: pointer;
+  right: 20px;
+}
+
+.close svg path,
+.close svg rect {
+  transition: all 0.2s ease-in-out;
+}
+
+.close:hover svg path,
+.close:hover svg rect {
+  fill: #197497;
+}
+
+.formPopup.showForm {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  transition: opacity 500ms;
+  visibility: visible;
+  opacity: 1;
+}
+
+.form-container {
+  background-color: white;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
 }
 
 .container {
@@ -42,39 +152,126 @@ header {
   justify-content: flex-start;
 }
 
-.form-container {
+#time .dayOfWeek {
+  font-size: 22px;
+  color: #159bcf;
+  font-weight: 600;
+}
+
+#time .dayOfMonth {
+  font-size: 22px;
+  color: #159bcf;
+}
+
+#time .curMonth {
+  font-size: 16px;
+  margin-top: 5px;
+  color: #a1a1a1;
+  display: block;
+}
+
+.info {
   display: flex;
+  justify-content: space-between;
+  box-shadow: 0px -6px 9px 1px grey;
+  margin-bottom: 4px;
+  padding: 18px 25px 15px;
+  background: #f9f9f9;
+}
+
+#total {
+  font-size: 14px;
+  margin-top: 5px;
+  color: #7a7a7a;
+  display: block;
 }
 
 .todo-container {
   width: 25rem;
+  padding: 30px 25px 15px;
 }
 
 form {
-  width: 25rem;
-  align-items: center;
-  padding: 0 0.5rem;
+  width: 42rem;
+  border-radius: 7px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 22vh;
+  margin: -4vh auto;
+  padding: 50px 25px;
   background-color: white;
-  display: flex;
-  justify-content: space-between;
+  z-index: 55555;
+}
+form h1 {
+  color: #1c9bcf;
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 25px;
+}
+
+form select {
+  display: block;
+  width: 100%;
+  background-size: 20px;
+  margin: 0;
+  height: 34px;
+  color: #50556a;
+  font-size: 14px;
 }
 
 form input {
-  flex: 1;
+  border: 1px solid #eeeeee;
+  border-radius: 7px;
+  color: #50556a;
+  font-size: 14px;
+  outline: none;
+  height: 34px;
+  padding: 0 12px;
+  width: 100%;
 }
 
-form input,
-form button {
-  border: none;
+form input::placeholder {
+  color: rgb(199, 199, 199);
+  font-weight: 100;
+}
+
+form .form-button {
+  text-align: center;
+}
+
+form .form-button .todo-button {
+  background-color: #159bcf;
   outline: none;
-  background-color: var(--mainWhite);
-  font-size: 1rem;
+  cursor: pointer;
+  width: 120px;
+  color: white;
+  border: none;
+  font-size: 14px;
+  transition: all 0.2s ease-in-out;
   padding: 0.5rem;
+  border-radius: 7px;
+  margin-top: 15px;
+}
+
+form .form-button .todo-button:hover {
+  background-color: #248bb3;
+}
+
+form .control-group {
+  margin-bottom: 20px;
+}
+
+form .control-group label {
+  font-size: 13px;
+  color: #7e7e7e;
+  margin-left: 2px;
 }
 
 .filter-todos {
   height: 34px;
   margin-left: 3px;
+  width: 250px;
   border: none;
 }
 
@@ -84,20 +281,30 @@ form button {
 
 .todolist li {
   flex: 1;
-
-  margin: 0.3rem 0;
-  background-color: var(--secondaryColor);
+  background-color: white;
   display: flex;
   justify-content: space-between;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
   align-items: center;
-  justify-content: space-between;
   align-items: center;
-
   transition: all 0.3s ease;
 }
 
-.todolist li.checked {
+.todolist li .text {
+  margin-left: 30px;
+}
+
+.todolist li .remove {
+  margin-right: 7px;
+  width: 25px;
+  height: 25px;
+}
+.todolist li .remove path {
+  fill: #689aab;
+  fill: #eb4949;
+}
+.todolist li.checked .text,
+.todolist li.checked .remove {
   opacity: 0.6;
   text-decoration: line-through;
 }
@@ -106,6 +313,102 @@ form button {
   display: flex;
 }
 
-.todolist li .actions svg {
-  margin: 2px;
+.showNewTask span {
+  width: 50px;
+  cursor: pointer;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #279ec5;
+  border-radius: 50px;
+  position: absolute;
+  box-shadow: 0 1px 4px 2px #c8dee7;
+  top: 60px;
+  right: 20px;
+  transition: all 0.3s ease;
+}
+
+.showNewTask span:hover {
+  animation: rotate 0.4s cubic-bezier(1, 0.9, 1, 1) 1;
+  background-color: #1f90bd;
+  box-shadow: 0 2px 7px 6px #c8dee7;
+  width: 53px;
+  height: 53px;
+}
+
+@keyframes rotate {
+  5% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+.check {
+  border: 2px solid #adadad;
+  width: 17px;
+  height: 17px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: -1px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+}
+.todolist li.checked .check {
+  border: 2px solid #279ec5;
+  background-color: #279ec5;
+}
+
+.check-icon {
+  width: 0;
+  height: 0;
+}
+
+.todolist li.checked .check-icon {
+  width: 13px;
+  height: 13px;
+  position: absolute;
+  stroke-dasharray: 140;
+  stroke-dashoffset: 140;
+  animation: fill 0.5s linear normal;
+  animation-fill-mode: forwards;
+}
+@keyframes fill {
+  from {
+    stroke-dashoffset: 140;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+select {
+  appearance: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 5px;
+  margin-left: 1rem;
+  position: relative;
+  width: 160px;
+  padding: 4px 30px 4px 10px;
+  font-size: 14px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  height: 30px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url("/images/arrow.svg") 97% / 20px no-repeat rgb(255, 255, 255);
+}
+select::-ms-expand {
+  display: none; /* Remove default arrow in Internet Explorer 10 and 11 */
+}
+
+.select {
+  position: relative;
+  margin-left: 1rem;
 }
