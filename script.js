@@ -10,6 +10,7 @@ const section = document.querySelector(".todo-section");
 const form = document.querySelector(".formPopup");
 const backdrop = document.querySelector(".overlay");
 const closeBtn = document.querySelector(".close");
+const emptyTask = document.querySelector(".empty");
 
 //event listeners
 todoButton.addEventListener("click", addTodo);
@@ -61,8 +62,8 @@ function actionTodo(e) {
   if (e.target.classList[0] === "remove") {
     const todo = item.parentElement.parentElement;
     removeLocalTodos(todo);
-    taskCounter();
     todo.remove();
+    taskCounter();
   } else if (e.target.classList[0] === "check") {
     const todo = item.parentElement;
     todo.classList.toggle("checked");
@@ -132,6 +133,7 @@ function getLocalTodos() {
 
 // remove item from DOM and localStorage
 function removeLocalTodos(todo) {
+  taskCounter();
   let savedStorage = localStorage.getItem("todos")
     ? JSON.parse(localStorage.getItem("todos"))
     : [];
@@ -140,17 +142,24 @@ function removeLocalTodos(todo) {
       return t;
     }
   });
+
   localStorage.setItem("todos", JSON.stringify(filterStorage));
 }
 
 // count the tasks
 function taskCounter() {
   let savedTodos = localStorage.getItem("todos");
-  let total = JSON.parse(savedTodos).length;
-  if (total > 1) {
-    document.querySelector("#total").innerText = `${total} Tasks`;
+  let storageLength = JSON.parse(savedTodos);
+  if (localStorage.length === 0 || storageLength.length === 0) {
+    emptyTask.innerText = "Your todo list is empty";
+    document.querySelector("#total").innerText = "0 Task";
   } else {
-    document.querySelector("#total").innerText = `${total} Task`;
+    emptyTask.innerText = "";
+    let total = JSON.parse(savedTodos).length;
+    if (total > 0) {
+      document.querySelector("#total").innerText =
+        total > 1 ? `${total} Tasks` : `${total} Task`;
+    }
   }
 }
 
