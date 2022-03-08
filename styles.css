@@ -18,6 +18,9 @@
   list-style: none;
   font-family: Shabnam;
 }
+select {
+  cursor: pointer;
+}
 a {
   cursor: pointer;
   box-sizing: border-box;
@@ -189,10 +192,23 @@ section {
 .todo-container {
   width: 25rem;
   padding: 30px 25px 15px;
+  height: 17rem;
+  overflow-y: auto;
 }
 
-form {
-  width: 42rem;
+.todo-container::-webkit-scrollbar {
+  background-color: transparent;
+  width: 12px;
+}
+
+.todo-container::-webkit-scrollbar-thumb {
+  border-radius: 99px;
+  background-color: #ddd;
+  border: 4px solid #fff;
+}
+
+form.newtask-form {
+  width: 44rem;
   border-radius: 7px;
   position: absolute;
   left: 0;
@@ -203,14 +219,14 @@ form {
   background-color: white;
   z-index: 55555;
 }
-form h1 {
+form.newtask-form h1 {
   color: #1c9bcf;
   text-align: center;
   font-size: 22px;
   margin-bottom: 25px;
 }
 
-form select {
+form.newtask-form select {
   display: block;
   width: 100%;
   background-size: 20px;
@@ -220,7 +236,7 @@ form select {
   font-size: 14px;
 }
 
-form input {
+form.newtask-form input {
   border: 1px solid #eeeeee;
   border-radius: 7px;
   color: #50556a;
@@ -231,16 +247,16 @@ form input {
   width: 100%;
 }
 
-form input::placeholder {
+form.newtask-form input::placeholder {
   color: rgb(199, 199, 199);
   font-weight: 100;
 }
 
-form .form-button {
+form.newtask-form .form-button {
   text-align: center;
 }
 
-form .form-button .todo-button {
+form.newtask-form .form-button .todo-button {
   background-color: #159bcf;
   outline: none;
   cursor: pointer;
@@ -254,25 +270,42 @@ form .form-button .todo-button {
   margin-top: 15px;
 }
 
-form .form-button .todo-button:hover {
+form.newtask-form .form-button .todo-button:hover {
   background-color: #248bb3;
 }
 
-form .control-group {
+form.newtask-form .control-group {
   margin-bottom: 20px;
 }
 
-form .control-group label {
+form.newtask-form .control-group label {
   font-size: 13px;
   color: #7e7e7e;
   margin-left: 2px;
 }
 
+.filter-wrapper {
+  background-color: white;
+  border-radius: 10px;
+  margin-left: 1.2rem;
+  padding: 15px;
+}
+.filter-wrapper h1 {
+  font-size: 16px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #159bcf;
+}
+
+.filter-wrapper .select {
+  margin: 0;
+}
+
 .filter-todos {
   height: 34px;
-  margin-left: 3px;
+  margin-left: 0;
   width: 250px;
-  border: none;
+  border: 1px solid #eeeeee;
 }
 
 .todolist {
@@ -280,22 +313,20 @@ form .control-group label {
 }
 
 .todolist li {
-  flex: 1;
   background-color: white;
-  display: flex;
-  justify-content: space-between;
   padding: 0.5rem 0;
-  align-items: center;
-  align-items: center;
+  display: flex;
   transition: all 0.3s ease;
 }
 
 .todolist li .text {
-  margin-left: 30px;
+  margin-left: 12px;
+  margin-right: auto;
 }
 
 .todolist li .remove {
   margin-right: 7px;
+  cursor: pointer;
   width: 25px;
   height: 25px;
 }
@@ -351,11 +382,7 @@ form .control-group label {
   height: 17px;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: -1px;
-  display: flex;
-  position: absolute;
-  align-items: center;
-  justify-content: center;
+  margin-top: 2px;
 }
 .todolist li.checked .check {
   border: 2px solid #279ec5;
@@ -411,4 +438,61 @@ select::-ms-expand {
 .select {
   position: relative;
   margin-left: 1rem;
+}
+
+#error {
+  color: red;
+}
+
+.category-wrapper {
+  background-color: white;
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-left: 1.2rem;
+  padding: 15px;
+  height: 300px;
+}
+
+.category-wrapper .control-group {
+  width: 100%;
+  margin-right: 8px;
+}
+
+.category-wrapper h1 {
+  font-size: 16px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #159bcf;
+}
+
+.category-wrapper .newcategory-form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.category-wrapper .newcategory-form .add-button {
+  width: 45px;
+  height: 33px;
+  border-radius: 7px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background-color: #c4e7f3;
+  cursor: pointer;
+  color: #065c78;
+}
+
+.category-wrapper .newcategory-form .add-button:hover {
+  background-color: #a7e3f7;
+}
+.category-wrapper input {
+  border: 1px solid #eeeeee;
+  border-radius: 7px;
+  color: #50556a;
+  font-size: 13px;
+  outline: none;
+  height: 34px;
+  padding: 0 7px;
+  width: 100%;
 }

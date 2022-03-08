@@ -11,6 +11,7 @@ const form = document.querySelector(".formPopup");
 const backdrop = document.querySelector(".overlay");
 const closeBtn = document.querySelector(".close");
 const emptyTask = document.querySelector(".empty");
+const errorInput = document.querySelector("#error");
 
 //event listeners
 todoButton.addEventListener("click", addTodo);
@@ -49,11 +50,18 @@ function addTodo(e) {
             <div class="actions"><svg class='remove' viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:#030303;}.cls-2{fill:none;}</style></defs><title/><g data-name="Layer 2" id="Layer_2"><g data-name="Layer 4" id="Layer_4"><path class="cls-1" d="M26,8H20.94V7A2.94,2.94,0,0,0,18,4.06H14A2.94,2.94,0,0,0,11.06,7V8H6a1,1,0,0,0,0,2H7.06V25A2.94,2.94,0,0,0,10,27.94H22A2.94,2.94,0,0,0,24.94,25V10H26a1,1,0,0,0,0-2ZM12.94,8V7A1.07,1.07,0,0,1,14,5.94h4A1.07,1.07,0,0,1,19.06,7V8H12.94ZM23.06,25A1.07,1.07,0,0,1,22,26.06H10A1.07,1.07,0,0,1,8.94,25V10H23.06Z"/><path class="cls-1" d="M18,21.49a1,1,0,0,0,1-1v-4a1,1,0,0,0-2,0v4A1,1,0,0,0,18,21.49Z"/><path class="cls-1" d="M14,21.49a1,1,0,0,0,1-1v-4a1,1,0,0,0-2,0v4A1,1,0,0,0,14,21.49Z"/><rect class="cls-2" height="32" width="32"/></g></g></svg>
             </div>
           `;
-  todoList.appendChild(todoElement);
-  saveLocalTodos(todoInput.value);
-  taskCounter();
-  showNewTask();
-  todoInput.value = "";
+  if (todoInput.value !== "") {
+    //valdating form
+    todoList.appendChild(todoElement);
+    saveLocalTodos(todoInput.value);
+    taskCounter();
+    showNewTask();
+    todoInput.value = "";
+    errorInput.innerText = "";
+  } else {
+    errorInput.innerText = "Please fill out this filled";
+    todoInput.focus();
+  }
 }
 
 //click on recycle bin or check icon

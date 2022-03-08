@@ -42,18 +42,42 @@
           <ul class="todolist"></ul>
         </div>
       </div>
-
-      <div class="select">
-        <select name="todos" class="filter-todos" id="">
-          <option value="all" class="all">all</option>
-          <option value="completed" class="completed">completed</option>
-          <option value="uncompleted" class="uncompleted">uncompleted</option>
-        </select>
+      <div class="right-sidebar">
+        <div class="filter-wrapper">
+          <h1>Filter</h1>
+          <div class="select">
+            <select name="todos" class="filter-todos" id="">
+              <option value="all" class="all">all</option>
+              <option value="completed" class="completed">completed</option>
+              <option value="uncompleted" class="uncompleted">
+                uncompleted
+              </option>
+            </select>
+          </div>
+        </div>
+        <!-- <div class="category-wrapper">
+          <h1>Your Category</h1>
+          <form action="" class="newcategory-form">
+            <div class="control-group">
+              <input
+                autocomplete="off"
+                type="text"
+                placeholder="create your category"
+                class="category-input"
+                name=""
+                id="in
+            put"
+              />
+            </div>
+            <div class="form-button">
+              <button class="add-button">add</button>
+            </div>
+          </form>
+        </div> -->
       </div>
     </section>
     <div class="formPopup">
       <div class="overlay"></div>
-
       <form action="" class="newtask-form">
         <span class="close"
           ><svg
@@ -91,12 +115,15 @@
         <div class="control-group">
           <label for="input">Add a task</label>
           <input
+            autocomplete="off"
             type="text"
             placeholder="I want to ..."
             class="todo-input"
             name=""
-            id="input"
+            id="in
+            put"
           />
+          <label for="" id="error"></label>
         </div>
         <div class="control-group">
           <label for="category">Category</label>
